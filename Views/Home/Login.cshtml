@@ -1,0 +1,17 @@
+    @model Login
+    <div style="width:48%; display: inline-block; vertical-align:top; border: 2px solid black; padding:20px;">
+        <form action="/signin" method="post" class="col-6 mx-auto">
+        <div class="form-group">
+            <label asp-for="Email2"></label>
+            <input type="email" asp-for="Email2" id="Email2" class="form-control">
+            <span class="text-danger" asp-validation-for="Email2"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password2"></label>
+            <input type="password" asp-for="Password2" id="Password2" class="form-control">
+            <span class="text-danger" asp-validation-for="Password2"></span>
+        </div>
+            <input type="submit" value="Log In" class="btn btn-primary" style="float:right;">
+        </form>
+    </div>
+    

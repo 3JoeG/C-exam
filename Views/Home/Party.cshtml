@@ -1,0 +1,31 @@
+@model Event
+
+
+@if(ViewBag.User.UserId==@Model.Creator.UserId)
+{
+<h1 style="margin-bottom:50px;">@Model.EventName <span style="float:right;"><a asp-action="delete" asp-route-userId="@ViewBag.User.UserId" asp-route-eventID="@Model.EventId" class="btn btn-primary">Delete</a></span></h1>
+}
+else if(Model.Attendees.Any(r=>r.UserId==ViewBag.User.UserId))
+{
+<h1 style="margin-bottom:50px;">@Model.EventName <span style="float:right;"><a asp-action="Remove" asp-route-userId="@ViewBag.User.UserId" asp-route-eventID="@Model.EventId" class="btn btn-primary">Leave</a></span></h1>
+}
+else
+{
+<h1 style="margin-bottom:50px;">@Model.EventName <span style="float:right;"><a asp-action="Join" asp-route-userId="@ViewBag.User.UserId" asp-route-eventId="@Model.EventId" class="btn btn-primary">Join</a></span></h1>
+
+}
+<h3 style="margin-bottom:50px;">Event Coordinator:  @Model.Creator.FName @Model.Creator.LName</h3>
+<h3 style="margin-bottom:50px;">Description:</h3>
+<p style="margin-bottom:50px;">@Model.Desc</p>
+
+<h6> Participants:</h6>
+<ul>
+    @if(@Model.Attendees.Count==0)
+    {
+        <p>No one has joined yet.</p>
+    }
+    @foreach(Attendee a in Model.Attendees)
+    {
+    <li>@a.Attender.FName</li>
+    }
+</ul>

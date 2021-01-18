@@ -1,0 +1,52 @@
+@model List<Event>
+
+
+<table style="width:90%">
+   <thead> 
+       <tr>
+           <th>Activity</th>
+            <th>Date and Time</th>
+            <th>Duration</th>
+            <th>Event Coordinator</th>
+            <th>No. of Participants</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    @foreach(Event i in Model)
+    {
+        @if(i.Start>DateTime.Now)
+        {
+            <tr>
+                <td><a asp-action="Party" asp-route-eventId="@i.EventId">@i.EventName</a></td>
+                <td>@i.Start.ToString("MM-dd h:mm tt")</td>
+                <td>@i.Duration @i.Unit</td>
+                <td>@i.Creator.FName</td>
+                <td>@i.Attendees.Count</td>
+                <td>
+                    @if(i.Creator.UserId==ViewBag.User.UserId)
+                    {
+                        <a asp-action="Delete" asp-route-eventId="@i.EventId">Delete</a>
+                    }
+                    else
+                    {
+                        if(i.Attendees.Any(r=>r.UserId==ViewBag.User.UserId))
+                        { 
+                            <a asp-action="Remove" asp-route-userId="@ViewBag.User.UserId" asp-route-eventId="@i.EventId">Leave</a>
+                        }
+                        else
+                        {
+                             <a asp-action="Join" asp-route-userId="@ViewBag.User.UserId" asp-route-eventId="@i.EventId">Join</a>
+                            
+                        }
+                    }
+                </td>
+            </tr>
+
+        }
+        
+        
+            
+        
+    }
+</table>
+<a href="/new" class="btn btn-primary" style="margin-top:50px;">New Event</a>
